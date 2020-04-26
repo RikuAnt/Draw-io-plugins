@@ -33,6 +33,7 @@ Draw.loadPlugin(function (ui) {
         this.funcColor = "#ff99dd";
         this.commentColor = "#009900";
         this.typeColor = "#ffff88";
+        this.constantColor = "#ff8866"
 
         this.addText = function(text) {
             this.text += text;
@@ -71,9 +72,22 @@ Draw.loadPlugin(function (ui) {
             return true;
         }
 
+        this.isTypeRow = function() {
+            return this.text.trim()[0] === this.text.trim()[0].toUpperCase() && this.text.match(/^[a-z]/i);
+        }
+
         this.format = function() {
             if(!this.text.includes("<font") && this.isCodeRow()) {
-                if(this.text.includes("(")) {
+                if(this.isTypeRow()) {
+                    if(this.text.includes(":")) {
+                        var parts = this.text.split(":");
+                        this.text = this.addColor(this.typeColor, parts[0]) + ":" + this.addColor(this.constantColor, parts[1]);
+                    }
+                    else {
+                        this.text = this.addColor(this.typeColor, this.text);
+                    }
+                }
+                else if(this.text.includes("(")) {
                     var part1 = this.text.split("(");
                     var part2 = part1[1].split(")");
     
