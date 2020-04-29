@@ -1,6 +1,6 @@
 
 /**
-* Sample plugin.
+* Plugin to format code variable declarations in components.
 */
 Draw.loadPlugin(function (ui) {
     var graph = ui.editor.graph;
@@ -247,9 +247,4 @@ Draw.loadPlugin(function (ui) {
 
         ui.menus.addMenuItems(menu, ['-', 'styled'], parent);
     };
-
-    // Forces refresh if file was loaded before plugin
-    if (ui.getCurrentFile() != null) {
-        graph.refresh();
-    }
 });
